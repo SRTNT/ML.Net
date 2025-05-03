@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Microsoft.ML;
 using Microsoft.ML.Trainers.FastTree;
+using Microsoft.ML.Trainers.LightGbm;
 using ML.Net;
 using ML.Net.Domains;
 using System.Text;
@@ -18,17 +19,6 @@ Console.WriteLine($"--> Get {allData.Count} Raw Data From SQL");
 var context = new MLContext();
 var data = context.Data.LoadFromEnumerable(allData);
 
-#region Show Upload Data
-foreach (var row in data.Preview().RowView)
-{
-    foreach (var item in row.Values)
-    {
-        Console.Write($"{item.Key}:{item.Value} ");
-    }
-    Console.WriteLine();
-}
-#endregion
-
 #endregion
 
 #region Handle Missing Data + Rounded Data
@@ -42,11 +32,18 @@ var preprocessingPipeline = D_Normalize.NormalizeData(context, data);
 #region Create PIPELINE
 var trainingPipeline = preprocessingPipeline
     .Append(context.Transforms.CopyColumns("Label", "TotalPrice")) // create label - label is the main result for predict-> must map to TotalPrice
-    .Append(context.Regression.Trainers.FastTree(new FastTreeRegressionTrainer.Options
+    //.Append(context.Regression.Trainers.FastTree(new FastTreeRegressionTrainer.Options
+    //{
+    //    NumberOfLeaves = 20,
+    //    NumberOfTrees = 100,
+    //    LearningRate = 0.1
+    //}))
+    .Append(context.Regression.Trainers.LightGbm(new LightGbmRegressionTrainer.Options
     {
-        NumberOfLeaves = 20,
-        NumberOfTrees = 100,
-        LearningRate = 0.1
+        NumberOfLeaves = 31,
+        LearningRate = 0.3,
+        NumberOfThreads = 100,
+        MinimumExampleCountPerLeaf = 20
     }))
     .Append(context.Transforms.CopyColumns("Score", "Score"));
 
@@ -87,8 +84,6 @@ Console.WriteLine($"Mean Absolute Error(MAE) :{metrics.MeanAbsoluteError.ToStrin
 Console.WriteLine($"Mean Squared Error(MSE) : {metrics.MeanSquaredError.ToString("n0")} Toman ");
 Console.WriteLine($"Root Mean Squared Error(RMSE): {metrics.RootMeanSquaredError.ToString("n0")} Toman");
 #endregion
-
-Console.ReadKey();
 
 Console.WriteLine("--------------------------- Finished App ---------------------------");
 
