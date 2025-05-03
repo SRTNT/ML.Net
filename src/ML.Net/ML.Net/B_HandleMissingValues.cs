@@ -24,7 +24,7 @@ internal class B_HandleMissingValues
         var transformedData = PipeLine.Fit(data).Transform(data);
 
         #region Rounded Data
-        var roundingPipeline = mLContext.Transforms.CustomMapping(new Action<Advertisement, 
+        var roundingPipeline = mLContext.Transforms.CustomMapping(new Action<Advertisement,
                                                                   AdvertisementRounded>(AdvertisementMapping.MapRounded),
                                                                   contractName: null);
 
@@ -35,7 +35,25 @@ internal class B_HandleMissingValues
             .Append(mLContext.Transforms.CopyColumns("Rooms", "RoomsRounded"))
             .Append(mLContext.Transforms.CopyColumns("Floor", "FloorRounded"));
 
-        var finalData = combinedPipeline.Fit(roundedData).Transform(roundedData);
+        var tempData = combinedPipeline.Fit(roundedData).Transform(roundedData);
+        #endregion
+
+        #region Select Column
+        var finalData = mLContext.Transforms
+                            .SelectColumns(new[]
+                            {
+                                "Area",
+                                "BuildYear",
+                                "Rooms",
+                                "Floor",
+                                "Elevator",
+                                "Parking",
+                                "Storage",
+                                "LocationName",
+                                "TotalPrice"
+                            })
+                            .Fit(tempData)
+                            .Transform(tempData);
         #endregion
 
         return finalData;
