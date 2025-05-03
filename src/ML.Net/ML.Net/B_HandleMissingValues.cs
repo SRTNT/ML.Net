@@ -12,8 +12,9 @@ internal class B_HandleMissingValues
 {
     public static IDataView Handle(MLContext mLContext, IDataView data)
     {
-        var PipeLine = mLContext.Transforms.ReplaceMissingValues(nameof(Advertisement.Area),
-                                                                 replacementMode: Microsoft.ML.Transforms.MissingValueReplacingEstimator.ReplacementMode.Mean)
+        var PipeLine = mLContext.Transforms
+             .ReplaceMissingValues(nameof(Advertisement.Area),
+                                   replacementMode: Microsoft.ML.Transforms.MissingValueReplacingEstimator.ReplacementMode.Mean)
              .Append(mLContext.Transforms.ReplaceMissingValues(nameof(Advertisement.BuildYear),
                                                                replacementMode: Microsoft.ML.Transforms.MissingValueReplacingEstimator.ReplacementMode.Mode))
              .Append(mLContext.Transforms.ReplaceMissingValues(nameof(Advertisement.Rooms),
@@ -31,7 +32,8 @@ internal class B_HandleMissingValues
         var roundedData = roundingPipeline.Fit(transformedData)
                                           .Transform(transformedData);
 
-        var combinedPipeline = mLContext.Transforms.CopyColumns("Area", "AreaRounded")
+        var combinedPipeline = mLContext.Transforms
+            .CopyColumns("Area", "AreaRounded")
             .Append(mLContext.Transforms.CopyColumns("Rooms", "RoomsRounded"))
             .Append(mLContext.Transforms.CopyColumns("Floor", "FloorRounded"));
 
