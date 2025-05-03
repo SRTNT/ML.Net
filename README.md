@@ -1,17 +1,8 @@
 <h3 align="center">A Passionate Backend-Frontend Developer from Iran</h3>
 
 ## Table of Contents
-- [About Me](#about-me)
-- [Connect with Me](#connect-with-me)
-- [Languages and Tools](#languages-and-tools)
-- [GitHub Stats](#github-stats)
-- [Projects Overview](#projects-overview)
-  - [Hello World](#hello-world)
-  - [Work Queues](#work-queues)
-  - [Direct Exchange - Fanout](#direct-exchange---fanout)
-  - [Direct Exchange - Direct](#direct-exchange---direct)
-  - [Conditional Exchange - Topic](#conditional-exchange---topic)
-- [Additional Resources](#additional-resources)
+- [Upload First](#1---Upload-First)
+- [Normalize & Rounded Data](#2---Normalize-&-Rounded-Data)
 
 <p align="left">
   <img src="https://komarev.com/ghpvc/?username=srtnt&label=Profile%20views&color=0e75b6&style=flat" alt="srtnt" />
