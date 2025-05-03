@@ -37,7 +37,8 @@ internal class B_HandleMissingValues
             .Append(mLContext.Transforms.CopyColumns("Rooms", "RoomsRounded"))
             .Append(mLContext.Transforms.CopyColumns("Floor", "FloorRounded"));
 
-        var tempData = combinedPipeline.Fit(roundedData).Transform(roundedData);
+        var tempData = combinedPipeline.Fit(roundedData)
+                                       .Transform(roundedData);
         #endregion
 
         #region Select Column
@@ -52,6 +53,11 @@ internal class B_HandleMissingValues
                                 "Parking",
                                 "Storage",
                                 "LocationName",
+                                "Year",
+                                "Month",
+                                "Day",
+                                "Hour",
+                                "IsWeekend",
                                 "TotalPrice"
                             })
                             .Fit(tempData)
