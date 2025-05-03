@@ -11,8 +11,9 @@ internal class D_Normalize
 {
     internal static IDataView NormalizeData(MLContext mlContext, IDataView data)
     {
+        // create pipe line
         var pipeline = mlContext.Transforms
-                           .NormalizeMinMax("Area", "Area")
+                           .NormalizeMinMax("Area", "Area") // if the names are same, it will replace the column
                            .Append(mlContext.Transforms.NormalizeMinMax("BuildYear", "BuildYear"))
                            .Append(mlContext.Transforms.NormalizeMinMax("Rooms", "Rooms"))
                            .Append(mlContext.Transforms.NormalizeMinMax("Floor", "Floor"));

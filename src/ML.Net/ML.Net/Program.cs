@@ -38,6 +38,13 @@ data = B_HandleMissingValues.Handle(context, data);
 data = D_Normalize.NormalizeData(context, data);
 #endregion
 
+#region Encode Categorical Values
+{
+    var pipeline = context.Transforms.Categorical.OneHotHashEncoding("LocationName", "LocationName");
+    data= pipeline.Fit(data).Transform(data);
+}
+#endregion
+
 #region Save Clean Data
 F_SaveCleanDataToCSV.Save(context, data, "CleanData.csv");
 #endregion
