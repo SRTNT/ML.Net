@@ -73,7 +73,7 @@
 
 ## Projects Overview
 
-### Upload First
+### 1 - Upload First
 #### Step
 - Read Data From SQL
 - Upload data To Context
@@ -88,7 +88,7 @@
 #### Source Code
 - [Code](https://github.com/SRTNT/ML.Net/tree/Upload%2BFillMissData)
 
-### Normalize & Rounded Data
+### 2 - Normalize & Rounded Data
 #### Step
 - Rounded Data (in fill missing data)
 - Select New structure for result (in fill missing data)
