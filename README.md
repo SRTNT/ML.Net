@@ -2,7 +2,7 @@
 
 ## Table of Contents
 - [Upload First](#1---Upload-First)
-- [Normalize & Rounded Data](#2---Normalize-&-Rounded-Data)
+- [Normalize & Rounded Data](#2---Normalize---Rounded-Data)
 
 <p align="left">
   <img src="https://komarev.com/ghpvc/?username=srtnt&label=Profile%20views&color=0e75b6&style=flat" alt="srtnt" />
@@ -79,7 +79,7 @@
 #### Source Code
 - [Code](https://github.com/SRTNT/ML.Net/tree/Upload%2BFillMissData)
 
-### 2 - Normalize & Rounded Data
+### 2 - Normalize - Rounded Data
 #### Step
 - Rounded Data (in fill missing data)
 - Select New structure for result (in fill missing data)
