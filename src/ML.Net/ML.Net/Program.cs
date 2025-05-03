@@ -34,6 +34,10 @@ foreach (var row in data.Preview().RowView)
 data = B_HandleMissingValues.Handle(context, data);
 #endregion
 
+#region Normalize
+data = D_Normalize.NormalizeData(context, data);
+#endregion
+
 #region Save Clean Data
 F_SaveCleanDataToCSV.Save(context, data, "CleanData.csv");
 #endregion
