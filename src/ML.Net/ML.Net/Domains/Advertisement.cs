@@ -10,13 +10,13 @@ public class Advertisement
     public float TotalPrice { get; set; }
     public float Floor { get; set; }
 
-    public DateTime date { get; set; } = DateTime.Now;
+    //public DateTime date { get; set; } = DateTime.Now;
 
-    public float Year { get; set; } = DateTime.Now.Year;
-    public float Month { get; set; } = DateTime.Now.Month;
-    public float Day { get; set; } = DateTime.Now.Day;
-    public float Hour { get; set; } = DateTime.Now.Hour;
-    public float IsWeekend { get; set; } = DateTime.Now.DayOfWeek == DayOfWeek.Friday ? 1 : 0;
+    //public float Year { get; set; } = DateTime.Now.Year;
+    //public float Month { get; set; } = DateTime.Now.Month;
+    //public float Day { get; set; } = DateTime.Now.Day;
+    //public float Hour { get; set; } = DateTime.Now.Hour;
+    //public float IsWeekend { get; set; } = DateTime.Now.DayOfWeek == DayOfWeek.Friday ? 1 : 0;
 
     public bool Elevator { get; set; }
     public bool Parking { get; set; }

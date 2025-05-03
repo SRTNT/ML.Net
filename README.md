@@ -73,7 +73,7 @@
 
 ## Projects Overview
 
-### Upload First
+### 1 - Upload First
 #### Step
 - Read Data From SQL
 - Upload data To Context
@@ -87,3 +87,20 @@
 
 #### Source Code
 - [Code](https://github.com/SRTNT/ML.Net/tree/Upload%2BFillMissData)
+
+### 2 - Normalize & Rounded Data
+#### Step
+- Rounded Data (in fill missing data)
+- Select New structure for result (in fill missing data)
+- Normalize Data (in D_Normalize.cs)
+- Encode Categorical Values (string Value like location)
+    - OneHotHashEncoding()
+    - OneHotEncoding()
+
+#### Next Step
+- Normalize Value 
+    - convert to double to int if neccessary
+    - convert string to double
+
+#### Source Code
+- [Code](https://github.com/SRTNT/ML.Net/tree/NormalizeData)

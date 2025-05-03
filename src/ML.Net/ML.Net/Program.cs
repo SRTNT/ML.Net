@@ -30,12 +30,25 @@ foreach (var row in data.Preview().RowView)
 
 #endregion
 
-#region Handle Missing Data
+#region Handle Missing Data + Rounded Data
 data = B_HandleMissingValues.Handle(context, data);
+#endregion
+
+#region Normalize
+data = D_Normalize.NormalizeData(context, data);
+#endregion
+
+#region Encode Categorical Values
+{
+    var pipeline = context.Transforms.Categorical.OneHotHashEncoding("LocationName", "LocationName");
+    data= pipeline.Fit(data).Transform(data);
+}
 #endregion
 
 #region Save Clean Data
 F_SaveCleanDataToCSV.Save(context, data, "CleanData.csv");
 #endregion
+
+Console.WriteLine("--------------------------- Finished App ---------------------------");
 
 Console.ReadKey();
