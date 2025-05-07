@@ -9,6 +9,11 @@ using System.Text;
 Console.OutputEncoding = Encoding.UTF8;
 Console.WriteLine("--------------------------- Start App ---------------------------");
 
+Console.WriteLine("   - 1: FastTree");
+Console.WriteLine("   - 2: Light Gbm");
+Console.Write("Enter Type Of Algorithem: ");
+var type = Console.ReadLine();
+
 #region Get Raw Data From SQL
 var allData = A_FetchDataFromSQL.FetchAdvertisements();
 Console.WriteLine($"--> Get {allData.Count} Raw Data From SQL");
@@ -27,25 +32,8 @@ data = B_HandleMissingValues.Handle(context, data);
 
 #region Normalize
 var preprocessingPipeline = D_Normalize.NormalizeData(context, data);
-#endregion
 
-#region Create PIPELINE
-var trainingPipeline = preprocessingPipeline
-    .Append(context.Transforms.CopyColumns("Label", "TotalPrice")) // create label - label is the main result for predict-> must map to TotalPrice
-    //.Append(context.Regression.Trainers.FastTree(new FastTreeRegressionTrainer.Options
-    //{
-    //    NumberOfLeaves = 20,
-    //    NumberOfTrees = 100,
-    //    LearningRate = 0.1
-    //}))
-    .Append(context.Regression.Trainers.LightGbm(new LightGbmRegressionTrainer.Options
-    {
-        NumberOfLeaves = 31,
-        LearningRate = 0.3,
-        NumberOfThreads = 100,
-        MinimumExampleCountPerLeaf = 20
-    }))
-    .Append(context.Transforms.CopyColumns("Score", "Score"));
+var trainingPipeline = GetPipeLine(context, preprocessingPipeline, type ?? "1");
 
 var tts = context.Data.TrainTestSplit(data, testFraction: 0.2);
 #endregion
@@ -88,3 +76,33 @@ Console.WriteLine($"Root Mean Squared Error(RMSE): {metrics.RootMeanSquaredError
 Console.WriteLine("--------------------------- Finished App ---------------------------");
 
 Console.ReadKey();
+
+static Microsoft.ML.Data.EstimatorChain<Microsoft.ML.Transforms.ColumnCopyingTransformer> GetPipeLine
+    (MLContext context, Microsoft.ML.Data.EstimatorChain<Microsoft.ML.Data.ColumnConcatenatingTransformer> preprocessingPipeline, string typeAlgorithem)
+{
+    if (typeAlgorithem == "1")
+    {
+        return preprocessingPipeline
+         .Append(context.Transforms.CopyColumns("Label", "TotalPrice")) // create label - label is the main result for predict-> must map to TotalPrice
+        .Append(context.Regression.Trainers.FastTree(new FastTreeRegressionTrainer.Options
+        {
+            NumberOfLeaves = 20,
+            NumberOfTrees = 100,
+            LearningRate = 0.1
+        }))
+         .Append(context.Transforms.CopyColumns("Score", "Score"));
+    }
+    else
+    {
+        return preprocessingPipeline
+         .Append(context.Transforms.CopyColumns("Label", "TotalPrice")) // create label - label is the main result for predict-> must map to TotalPrice
+         .Append(context.Regression.Trainers.LightGbm(new LightGbmRegressionTrainer.Options
+         {
+             NumberOfLeaves = 31,
+             LearningRate = 0.3,
+             NumberOfThreads = 100,
+             MinimumExampleCountPerLeaf = 20
+         }))
+         .Append(context.Transforms.CopyColumns("Score", "Score"));
+    }
+}
